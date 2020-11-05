@@ -1,6 +1,10 @@
 package main
 
-import "github.com/prometheus/client_golang/prometheus"
+import (
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/common/log"
+	"time"
+)
 
 type Collector struct {
 	blocks           *prometheus.Desc
@@ -21,7 +25,7 @@ type Collector struct {
 	unsubscribes     *prometheus.Desc
 }
 
-func collector() *Collector {
+func newCollector() *Collector {
 	return &Collector{
 		blocks: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "blocks"),
@@ -120,4 +124,129 @@ func collector() *Collector {
 			nil,
 		),
 	}
+}
+
+func (c *Collector) Collect(ch chan<- prometheus.Metric) {
+	today := time.Now()
+	metrics, err := collectByDate(today, "secret")
+	if err != nil {
+		log.Error(err)
+		return
+	}
+
+	for _, stats := range metrics[0].Stats {
+		ch <- prometheus.MustNewConstMetric(
+			c.blocks,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.Blocks),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.bounceDrops,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.BounceDrops),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.bounces,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.Bounces),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.clicks,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.Clicks),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.deferred,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.Deferred),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.delivered,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.Delivered),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.invalidEmails,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.InvalidEmails),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.opens,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.Opens),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.processed,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.Processed),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.requests,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.Requests),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.spamReportDrops,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.SpamReportDrops),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.spamReports,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.SpamReports),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.uniqueClicks,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.UniqueClicks),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.uniqueOpens,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.UniqueOpens),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.unsubscribeDrops,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.UnsubscribeDrops),
+			stats.Type,
+			stats.Name,
+		)
+		ch <- prometheus.MustNewConstMetric(
+			c.unsubscribes,
+			prometheus.GaugeValue,
+			float64(stats.Metrics.Unsubscribes),
+			stats.Type,
+			stats.Name,
+		)
+	}
+
 }
