@@ -9,15 +9,13 @@ import (
 )
 
 const (
-	namespace    = "SendGrid"
+	namespace    = "sendgrid"
 	exporterName = "sendgrid-stats-exporter"
 )
 
 const (
 	port = 2112
 )
-
-type statsCollector struct{}
 
 func main() {
 	log.Printf("Starting %s %s\n", exporterName, version.Info())
