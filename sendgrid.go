@@ -52,12 +52,11 @@ func collectByDate(time time.Time, apiKey string) ([]*Statistics, error) {
 	}
 
 	layout := "2006-01-02"
-	start := time.Format(layout)
-	end := time.Format(layout)
+	date := time.Format(layout)
 
 	query := url.Values{}
-	query.Set("start_date", start)
-	query.Set("end_date", end)
+	query.Set("start_date", date)
+	query.Set("end_date", date)
 	query.Set("aggregated_by", "day")
 	parsedUrl.RawQuery = query.Encode()
 

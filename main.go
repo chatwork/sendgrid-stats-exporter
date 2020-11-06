@@ -24,7 +24,7 @@ func main() {
 
 	log.Printf("Listening on %d", port)
 
-	collector := newCollector()
+	collector := collector()
 	prometheus.MustRegister(collector)
 
 	http.Handle("/metrics", promhttp.Handler())

@@ -25,7 +25,7 @@ type Collector struct {
 	unsubscribes     *prometheus.Desc
 }
 
-func newCollector() *Collector {
+func collector() *Collector {
 	return &Collector{
 		blocks: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "blocks"),
