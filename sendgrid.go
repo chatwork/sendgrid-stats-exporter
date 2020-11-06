@@ -34,9 +34,7 @@ type Metrics struct {
 }
 
 type Stat struct {
-	Metrics *Metrics `json:"metrics,omitempty"`
-	Name    string   `json:"name,omitempty"`
-	Type    string   `json:"type,omitempty"`
+	Metrics  *Metrics `json:"metrics,omitempty"`
 }
 
 type Statistics struct {
