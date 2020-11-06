@@ -42,7 +42,7 @@ type Statistics struct {
 	Stats []*Stat `json:"stats,omitempty"`
 }
 
-func collectByDate(time time.Time, apiKey string) ([]*Statistics, error) {
+func collectByDate(time time.Time) ([]*Statistics, error) {
 
 	parsedUrl, err := url.Parse(endpoint)
 	if err != nil {
@@ -62,7 +62,7 @@ func collectByDate(time time.Time, apiKey string) ([]*Statistics, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", apiKey))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("SENDGRID_API_KEY")))
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {

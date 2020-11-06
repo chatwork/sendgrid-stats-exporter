@@ -131,7 +131,7 @@ func collector() *Collector {
 
 func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 	today := time.Now()
-	statistics, err := collectByDate(today, os.Getenv("SENDGRID_API_KEY"))
+	statistics, err := collectByDate(today)
 	if err != nil {
 		log.Error(err)
 		return
