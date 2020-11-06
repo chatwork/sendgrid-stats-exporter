@@ -33,6 +33,7 @@ func main() {
 
 	collector := collector()
 	prometheus.MustRegister(collector)
+	prometheus.Unregister(prometheus.NewGoCollector())
 
 	sig := make(chan os.Signal, 1)
 	signal.Notify(
