@@ -11,16 +11,41 @@
 
 ## Usage
 
-### Using Docker
+### Running with Docker
 
 (TBW)
 
  - docker run
- - docker-compose up -d
  
-### Configuration
+#### Running with `docker-compose`
 
-You can specify a user name to identify metrics for multiple users, as well as categories. 
+```
+$ cp .env.example .env
+$ vi .env
+$ docker-compose up -d
+```
+
+You can check the metrics by accessing Prometheus ([http://127.0.0.1:9200]()).
+
+## Building
+
+### Building locally
+
+```
+$ make
+```
+
+### Building with Docker
+
+```
+$ docker build -t sendgrid-stats-exporter .
+```
+ 
+## Configuration
+
+### Exporter
+
+You can specify a user name as environment variable to identify metrics for multiple users, as well as categories. 
 
 Name     | Description | Default
 ---------|-------------|----
@@ -28,6 +53,17 @@ Name     | Description | Default
 `SENDGRID_USER_NAME` | (Optional) Label for metrics | `""`
 `SENDGRID_CATEGORY` | (not implemented) | `""`
 
+### Prometheus
+
+Example:
+
+```yaml
+scrape_configs:
+  - job_name: 'sendgrid'
+    static_configs:
+      - targets:
+          -  https://sendgrid-stats-exporter.example.com:2112
+```
 
 ## Metrics
 
