@@ -1,18 +1,10 @@
 ---
 version: 2.1
 
-orbs:
-  # https://circleci.com/orbs/registry/orb/circleci/go
-  go: circleci/go@1.5.0
-
-executors:
-  golang:
-    name: go/default
-    tag: '1.15.0'
-
 jobs:
   go_build:
-    executor: golang
+    docker:
+      - image: cimg/go:1.15.4
     steps:
       - checkout
       - go/mod-download-cached
