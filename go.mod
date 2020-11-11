@@ -1,4 +1,4 @@
-module go-project
+module github.com/chatwork/sendgrid-stats-exporter
 
 go 1.15
 
