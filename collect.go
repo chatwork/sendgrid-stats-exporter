@@ -7,7 +7,10 @@ import (
 	"time"
 )
 
-
+var (
+	sendGridUserName = os.Getenv("SENDGRID_USER_NAME")
+	sendGridCategory = os.Getenv("SENDGRID_CATEGORY")
+)
 
 type Collector struct {
 	blocks           *prometheus.Desc
@@ -137,121 +140,118 @@ func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 		return
 	}
 
-	userName := os.Getenv("SENDGRID_USER_NAME")
-	category := os.Getenv("SENDGRID_CATEGORY")
-
 	for _, stats := range statistics[0].Stats {
 		ch <- prometheus.MustNewConstMetric(
 			c.blocks,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.Blocks),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.bounceDrops,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.BounceDrops),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.bounces,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.Bounces),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.clicks,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.Clicks),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.deferred,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.Deferred),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.delivered,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.Delivered),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.invalidEmails,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.InvalidEmails),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.opens,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.Opens),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.processed,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.Processed),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.requests,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.Requests),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.spamReportDrops,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.SpamReportDrops),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.spamReports,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.SpamReports),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.uniqueClicks,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.UniqueClicks),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.uniqueOpens,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.UniqueOpens),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.unsubscribeDrops,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.UnsubscribeDrops),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 		ch <- prometheus.MustNewConstMetric(
 			c.unsubscribes,
 			prometheus.GaugeValue,
 			float64(stats.Metrics.Unsubscribes),
-			userName,
-			category,
+			sendGridUserName,
+			sendGridCategory,
 		)
 	}
 

@@ -14,6 +14,10 @@ const (
 	endpoint = "https://api.sendgrid.com/v3/stats"
 )
 
+var (
+	sendGridApiKey = os.Getenv("SENDGRID_API_KEY")
+)
+
 type Metrics struct {
 	Blocks           int64 `json:"blocks,omitempty"`
 	BounceDrops      int64 `json:"bounce_drops,omitempty"`
@@ -62,7 +66,7 @@ func collectByDate(time time.Time) ([]*Statistics, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("SENDGRID_API_KEY")))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", sendGridApiKey))
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
