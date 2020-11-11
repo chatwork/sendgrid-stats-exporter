@@ -11,6 +11,17 @@
 
 ## Usage
 
+```
+$ make
+$ ./exporter
+$ SENDGRID_API_KEY="secret" SENDGRID_USER_NAME="username" SENDGRID_CATEGORY="" ./exporter 
+```
+
+```
+$ curl localhost:2112/-/healthy
+$ curl localhost:2112/metrics
+```
+
 ### Running with Docker
 
 (TBW)
@@ -64,6 +75,13 @@ scrape_configs:
       - targets:
           -  https://sendgrid-stats-exporter.example.com:2112
 ```
+
+## Endpoints
+
+Name     | Description
+---------|-------------
+`/metrics` | get metrics
+`/-/healthy` | for health check
 
 ## Metrics
 
