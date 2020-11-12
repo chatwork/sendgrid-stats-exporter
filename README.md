@@ -54,6 +54,10 @@ $ docker build -t sendgrid-stats-exporter .
  
 ## Configuration
 
+```
+
+```
+
 ### Exporter
 
 You can specify a user name as environment variable to identify metrics for multiple users, as well as categories. 
@@ -64,17 +68,6 @@ Name     | Description | Default
 `SENDGRID_USER_NAME` | (Optional) Label for metrics | `""`
 `SENDGRID_CATEGORY` | (not implemented) | `""`
 
-### Prometheus
-
-Example:
-
-```yaml
-scrape_configs:
-  - job_name: 'sendgrid'
-    static_configs:
-      - targets:
-          -  https://sendgrid-stats-exporter.example.com:2112
-```
 
 ## Endpoints
 

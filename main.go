@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/version"
+	"gopkg.in/alecthomas/kingpin.v2"
 	"log"
 	"net/http"
 	"os"
@@ -20,16 +20,21 @@ const (
 )
 
 const (
-	port              = 2112
 	stopTimeoutSecond = 10
 )
 
+var (
+	app = kingpin.New("sendgrid-stats-exporter", "Prometheus metrics exporter for SendGrid stats")
+	listenAddress = app.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9154").String()
+)
+
 func main() {
-	// todo: Add bootstrap steps to check required env vars
+	kingpin.MustParse(app.Parse(os.Args[1:]))
+
 	log.Printf("Starting %s %s\n", exporterName, version.Info())
 	log.Printf("Build context %s\n", version.BuildContext())
 
-	log.Printf("Listening on %d", port)
+	log.Printf("Listening on %s\n", *listenAddress)
 
 	collector := collector()
 	prometheus.MustRegister(collector)
@@ -51,7 +56,7 @@ func main() {
 	})
 
 	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%d", port),
+		Addr:    *listenAddress,
 		Handler: mux,
 	}
 
