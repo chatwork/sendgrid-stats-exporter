@@ -24,8 +24,12 @@ const (
 )
 
 var (
-	app = kingpin.New("sendgrid-stats-exporter", "Prometheus metrics exporter for SendGrid stats")
-	listenAddress = app.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9154").String()
+	app                    = kingpin.New("sendgrid-stats-exporter", "Prometheus metrics exporter for SendGrid stats")
+	listenAddress          = app.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9154").String()
+	disableExporterMetrics = app.Flag(
+		"web.disable-exporter-metrics",
+		"Exclude metrics about the exporter itself (promhttp_*, process_*, go_*).",
+	).Bool()
 )
 
 func main() {
@@ -39,6 +43,14 @@ func main() {
 	collector := collector()
 	prometheus.MustRegister(collector)
 	prometheus.Unregister(prometheus.NewGoCollector())
+	registry := prometheus.NewRegistry()
+	if !*disableExporterMetrics {
+		registry.MustRegister(
+			prometheus.NewProcessCollector(prometheus.ProcessCollectorOpts{}),
+			prometheus.NewGoCollector(),
+		)
+	}
+	registry.MustRegister(collector)
 
 	sig := make(chan os.Signal, 1)
 	signal.Notify(
@@ -49,7 +61,7 @@ func main() {
 	defer signal.Stop(sig)
 
 	mux := http.NewServeMux()
-	mux.Handle("/metrics", promhttp.Handler())
+	mux.Handle("/metrics", promhttp.HandlerFor(registry, promhttp.HandlerOpts{}))
 	mux.HandleFunc("/-/healthy", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`OK`))
