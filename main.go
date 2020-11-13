@@ -2,11 +2,13 @@ package main
 
 import (
 	"context"
+	"github.com/go-kit/kit/log/level"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/prometheus/common/promlog"
+	"github.com/prometheus/common/promlog/flag"
 	"github.com/prometheus/common/version"
 	"gopkg.in/alecthomas/kingpin.v2"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -24,21 +26,27 @@ const (
 )
 
 var (
-	app                    = kingpin.New("sendgrid-stats-exporter", "Prometheus metrics exporter for SendGrid stats")
-	listenAddress          = app.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9154").String()
-	disableExporterMetrics = app.Flag(
+	gitCommit              string
+	listenAddress          = kingpin.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9154").String()
+	disableExporterMetrics = kingpin.Flag(
 		"web.disable-exporter-metrics",
 		"Exclude metrics about the exporter itself (promhttp_*, process_*, go_*).",
 	).Bool()
 )
 
 func main() {
-	kingpin.MustParse(app.Parse(os.Args[1:]))
+	promlogConfig := &promlog.Config{}
+	flag.AddFlags(kingpin.CommandLine, promlogConfig)
+	kingpin.Version(version.Info())
+	kingpin.HelpFlag.Short('h')
+	kingpin.Parse()
 
-	log.Printf("Starting %s %s\n", exporterName, version.Info())
-	log.Printf("Build context %s\n", version.BuildContext())
+	logger := promlog.New(promlogConfig)
 
-	log.Printf("Listening on %s\n", *listenAddress)
+	level.Info(logger).Log("msg", "Starting", exporterName, "version", version.Info(), gitCommit)
+	level.Info(logger).Log("Build context", version.BuildContext())
+
+	level.Info(logger).Log("msg", "Listening on", *listenAddress)
 
 	collector := collector()
 	prometheus.MustRegister(collector)
@@ -74,7 +82,7 @@ func main() {
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil {
-			log.Fatal(err)
+			level.Error(logger).Log("err", err)
 		}
 	}()
 
@@ -84,6 +92,6 @@ func main() {
 	defer cancel()
 
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatal(err)
+		level.Error(logger).Log("err", err)
 	}
 }

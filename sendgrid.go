@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"gopkg.in/alecthomas/kingpin.v2"
 	"io"
 	"net/http"
 	"net/url"
@@ -15,7 +16,7 @@ const (
 )
 
 var (
-	sendGridApiKey = os.Getenv("SENDGRID_API_KEY")
+	sendGridApiKey = kingpin.Flag("sendgrid.api-key", "SendGrid API key").Required().String()
 )
 
 type Metrics struct {
@@ -38,7 +39,7 @@ type Metrics struct {
 }
 
 type Stat struct {
-	Metrics  *Metrics `json:"metrics,omitempty"`
+	Metrics *Metrics `json:"metrics,omitempty"`
 }
 
 type Statistics struct {
@@ -66,7 +67,7 @@ func collectByDate(time time.Time) ([]*Statistics, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", sendGridApiKey))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", *sendGridApiKey))
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
