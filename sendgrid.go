@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"gopkg.in/alecthomas/kingpin.v2"
 	"io"
 	"net/http"
 	"net/url"
@@ -13,10 +12,6 @@ import (
 
 const (
 	endpoint = "https://api.sendgrid.com/v3/stats"
-)
-
-var (
-	sendGridApiKey = kingpin.Flag("sendgrid.api-key", "SendGrid API key").Required().String()
 )
 
 type Metrics struct {

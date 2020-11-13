@@ -32,6 +32,8 @@ var (
 		"web.disable-exporter-metrics",
 		"Exclude metrics about the exporter itself (promhttp_*, process_*, go_*).",
 	).Bool()
+	sendGridUserName = kingpin.Flag("sendgrid.username", "Set SendGrid username").Default("").String()
+	sendGridApiKey = kingpin.Flag("sendgrid.api-key", "Set SendGrid API key").Default("secret").String()
 )
 
 func main() {
