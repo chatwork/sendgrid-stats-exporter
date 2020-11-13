@@ -26,14 +26,14 @@ const (
 )
 
 var (
-	gitCommit              string
-	listenAddress          = kingpin.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9154").String()
+	gitCommit     string
+	listenAddress = kingpin.Flag("web.listen-address", "Address to listen on for web interface and telemetry.").Default(":9154").String()
 	disableExporterMetrics = kingpin.Flag(
 		"web.disable-exporter-metrics",
 		"Exclude metrics about the exporter itself (promhttp_*, process_*, go_*).",
 	).Bool()
 	sendGridUserName = kingpin.Flag("sendgrid.username", "Set SendGrid username").Default("").String()
-	sendGridApiKey = kingpin.Flag("sendgrid.api-key", "Set SendGrid API key").Default("secret").String()
+	sendGridApiKey   = kingpin.Flag("sendgrid.api-key", "Set SendGrid API key").Default("secret").String()
 )
 
 func main() {
