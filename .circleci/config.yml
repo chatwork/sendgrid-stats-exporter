@@ -13,6 +13,11 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - docker_build:
+          context: "DockerHub"
+          filters:
+            tags:
+              only: /.*/
 
 jobs:
   go_build:
@@ -23,3 +28,15 @@ jobs:
       - checkout
       - go/mod-download-cached
       - run: make
+  docker-build:
+    docker:
+      - image: chatwork/circleci-docker:18.09.3
+    environment:
+      - CIRCLECI_WORKSPACE: /root/project
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+          version: 18.09.3
+      - run: docker login -u="${DOCKER_REGISTRY_USERNAME}" -p="${DOCKER_REGISTRY_PASSWORD}"
+      - run: make build-image
