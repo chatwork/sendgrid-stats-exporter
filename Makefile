@@ -15,17 +15,9 @@ build:
 
 .PHONY: build-image
 build-image:
-	docker build -t chatwork/"$(REPO)" .;
-	@version=$$(docker inspect -f {{.Config.Labels.version}} chatwork/"$(REPO)"); \
-		if [ -n "$$version" ]; then \
-			docker tag chatwork/"$(REPO)":latest chatwork/"$(REPO)":$$version; \
-		fi
+	docker build -t chatwork/"$(REPO)" .
+	docker tag chatwork/"$(REPO)":latest chatwork/"$(REPO)":"$(VERSION)"
 
 .PHONY: push-image
 push-image:
-	@version=$$(docker inspect -f {{.Config.Labels.version}} chatwork/"$(REPO)":latest); \
-		if docker inspect --format='{{index .RepoDigests 0}}' chatwork/"$(REPO)":$$version >/dev/null 2>&1; then \
-			echo "no changes"; \
-		else \
-			docker push chatwork/"$(REPO)"; \
-		fi
+	docker push chatwork/"$(REPO)"
