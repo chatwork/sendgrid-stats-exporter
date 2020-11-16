@@ -11,9 +11,8 @@ FROM alpine:3.12
 
 RUN apk --no-cache add ca-certificates \
      && addgroup exporter \
-     && adduser -S -G exporter exporters
+     && adduser -S -G exporter exporter
 USER exporter
 COPY --from=build /bin/exporter /bin/exporter
 
 ENTRYPOINT [ "/bin/exporter" ]
-CMD ["--help"]

@@ -13,12 +13,12 @@
 
 ```
 $ make
-$ ./exporter --sendgrid.api-key='secret' --web.listen-address=':2112' --web.disable-exporter-metrics
+$ ./exporter --sendgrid.api-key='secret' --web.listen-address=':9154' --web.disable-exporter-metrics
 ```
 
 ```
-$ curl localhost:2112/-/healthy
-$ curl localhost:2112/metrics
+$ curl localhost:9154/-/healthy
+$ curl localhost:9154/metrics
 ```
 
 ```
