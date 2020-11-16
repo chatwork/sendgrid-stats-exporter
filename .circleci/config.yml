@@ -23,7 +23,10 @@ workflows:
           context: "DockerHub"
           filters:
             tags:
-              only: /.*/
+              only: /^.*/
+            branches:
+              ignore:
+                - /^.*/
 
 jobs:
   go_build:
