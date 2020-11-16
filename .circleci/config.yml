@@ -28,7 +28,7 @@ jobs:
       - checkout
       - go/mod-download-cached
       - run: make
-  docker-build:
+  docker_build:
     docker:
       - image: chatwork/circleci-docker:18.09.3
     environment:
