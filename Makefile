@@ -19,3 +19,12 @@ build-image:
     		if [ -n "$$version" ]; then \
     			docker tag chatwork/"$(REPO)":latest chatwork/"$(REPO)":$$version; \
     		fi
+
+.PHONY: push-image
+push-image:
+	@version=$$(docker inspect -f {{.Config.Labels.version}} chatwork/"$(REPO)":latest); \
+		if docker inspect --format='{{index .RepoDigests 0}}' chatwork/"$(REPO)":$$version >/dev/null 2>&1; then \
+			echo "no changes"; \
+		else \
+			docker push chatwork/"$(REPO)"; \
+		fi
