@@ -14,11 +14,11 @@ build:
 
 .PHONY: build-image
 build-image:
-		docker build -t chatwork/"$(REPO)" .;
-    	@version=$$(docker inspect -f {{.Config.Labels.version}} chatwork/"$(REPO)"); \
-    		if [ -n "$$version" ]; then \
-    			docker tag chatwork/"$(REPO)":latest chatwork/"$(REPO)":$$version; \
-    		fi
+	docker build -t chatwork/"$(REPO)" .;
+	@version=$$(docker inspect -f {{.Config.Labels.version}} chatwork/"$(REPO)"); \
+		if [ -n "$$version" ]; then \
+			docker tag chatwork/"$(REPO)":latest chatwork/"$(REPO)":$$version; \
+		fi
 
 .PHONY: push-image
 push-image:
