@@ -11,6 +11,60 @@
 
 ## Usage
 
+```
+$ make
+$ ./exporter --sendgrid.api-key='secret' --web.listen-address=':9154' --web.disable-exporter-metrics
+```
+
+```
+$ curl localhost:9154/-/healthy
+$ curl localhost:9154/metrics
+```
+
+```
+$ ./exporter -h
+usage: exporter [<flags>]
+
+Flags:
+  -h, --help                  Show context-sensitive help (also try --help-long and --help-man).
+      --web.listen-address=":9154"
+                              Address to listen on for web interface and telemetry.
+      --web.disable-exporter-metrics
+                              Exclude metrics about the exporter itself (promhttp_*, process_*, go_*).
+      --sendgrid.username=""  Set SendGrid username
+      --sendgrid.api-key="secret"
+                              Set SendGrid API key
+      --log.level=info        Only log messages with the given severity or above. One of: [debug, info, warn, error]
+      --log.format=logfmt     Output format of log messages. One of: [logfmt, json]
+      --version               Show application version.
+```
+
+## Endpoints
+
+Name     | Description
+---------|-------------
+`/metrics` | get metrics
+`/-/healthy` | for health check
+
+## Metrics
+
+Name     | Description
+---------|------------
+blocks | dummy
+bounce_drops | dummy
+bounces | dummy
+deferred | dummy
+delivered | dummy
+invalid_emails | dummy
+processed | dummy
+requests | dummy
+spam_report_drops | dummy
+spam_reports | dummy
+unique_clicks | dummy
+unique_opens | dummy
+unsubscribe_drops | dummy
+unsubscribes | dummy
+
 ### Running with Docker
 
 (TBW)
@@ -40,46 +94,3 @@ $ make
 ```
 $ docker build -t sendgrid-stats-exporter .
 ```
- 
-## Configuration
-
-### Exporter
-
-You can specify a user name as environment variable to identify metrics for multiple users, as well as categories. 
-
-Name     | Description | Default
----------|-------------|----
-`SENDGRID_API_KEY` | API key for calling stats API (v3) | `""`
-`SENDGRID_USER_NAME` | (Optional) Label for metrics | `""`
-`SENDGRID_CATEGORY` | (not implemented) | `""`
-
-### Prometheus
-
-Example:
-
-```yaml
-scrape_configs:
-  - job_name: 'sendgrid'
-    static_configs:
-      - targets:
-          -  https://sendgrid-stats-exporter.example.com:2112
-```
-
-## Metrics
-
-Name     | Description
----------|------------
-blocks | dummy
-bounce_drops | dummy
-bounces | dummy
-deferred | dummy
-delivered | dummy
-invalid_emails | dummy
-processed | dummy
-requests | dummy
-spam_report_drops | dummy
-spam_reports | dummy
-unique_clicks | dummy
-unique_opens | dummy
-unsubscribe_drops | dummy
-unsubscribes | dummy

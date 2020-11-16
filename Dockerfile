@@ -14,6 +14,5 @@ RUN apk --no-cache add ca-certificates \
      && adduser -S -G exporter exporter
 USER exporter
 COPY --from=build /bin/exporter /bin/exporter
-ENV LISTEN_PORT=2112
-EXPOSE 2112
+
 ENTRYPOINT [ "/bin/exporter" ]

@@ -21,14 +21,20 @@ services:
       - "9090:9090"
 
   sendgrid-stats-exporter:
-    # image
+    # image:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "2112:2112"
+      - "9154:9154"
+    healthcheck:
+      test: curl -s https://localhost:9154/-/healthy >/dev/null; if [[ $$? == 52 ]]; then echo 0; else echo 1; fi
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    command: ""
     environment:
+      DISABLE_EXPORTER_METRICS: "true"
       SENDGRID_API_KEY: ${SENDGRID_API_KEY}
       SENDGRID_USER_NAME: ${SENDGRID_USER_NAME}
-      SENDGRID_CATEGORY: ${SENDGRID_CATEGORY}
 

@@ -34,7 +34,7 @@ type Metrics struct {
 }
 
 type Stat struct {
-	Metrics  *Metrics `json:"metrics,omitempty"`
+	Metrics *Metrics `json:"metrics,omitempty"`
 }
 
 type Statistics struct {
@@ -62,7 +62,7 @@ func collectByDate(time time.Time) ([]*Statistics, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("SENDGRID_API_KEY")))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", *sendGridApiKey))
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {

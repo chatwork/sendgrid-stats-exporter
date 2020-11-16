@@ -5,6 +5,12 @@ orbs:
   # https://circleci.com/developer/orbs/orb/circleci/go
   go: circleci/go@1.5.0
 
+executors:
+  docker_executor:
+    docker:
+      - image: chatwork/circleci-docker:18.09.3
+    working_directory: /root/project
+
 workflows:
   version: 2
   main:
@@ -13,6 +19,14 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - docker_build_and_bush:
+          context: "DockerHub"
+          filters:
+            tags:
+              only: /^.*/
+            branches:
+              ignore:
+                - /^.*/
 
 jobs:
   go_build:
@@ -23,3 +37,16 @@ jobs:
       - checkout
       - go/mod-download-cached
       - run: make
+
+  docker_build_and_bush:
+    executor: docker_executor
+    environment:
+      - CIRCLECI_WORKSPACE: /root/project
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+          version: 18.09.3
+      - run: docker login -u="${DOCKER_REGISTRY_USERNAME}" -p="${DOCKER_REGISTRY_PASSWORD}"
+      - run: make build-image
+      - run: make push-image
