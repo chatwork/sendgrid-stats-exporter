@@ -21,14 +21,14 @@ services:
       - "9090:9090"
 
   sendgrid-stats-exporter:
-    # image
+    # image:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "2112:2112"
     environment:
+      DISABLE_EXPORTER_METRICS: "true"
       SENDGRID_API_KEY: ${SENDGRID_API_KEY}
       SENDGRID_USER_NAME: ${SENDGRID_USER_NAME}
-      SENDGRID_CATEGORY: ${SENDGRID_CATEGORY}
 

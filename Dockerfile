@@ -11,9 +11,9 @@ FROM alpine:3.12
 
 RUN apk --no-cache add ca-certificates \
      && addgroup exporter \
-     && adduser -S -G exporter exporter
+     && adduser -S -G exporter exporters
 USER exporter
 COPY --from=build /bin/exporter /bin/exporter
-ENV LISTEN_PORT=2112
-EXPOSE 2112
+
 ENTRYPOINT [ "/bin/exporter" ]
+CMD ["--help"]
