@@ -59,7 +59,7 @@ spam_report_drops | The number of emails that were dropped due to a recipient pr
 spam_reports | The number of recipients who marked your email as spam.
 unique_clicks | The number of unique recipients who clicked links in your emails.
 unique_opens | The number of unique recipients who opened your emails.
-unsubscribe_drops | The number of emails dropped due to a recipient unsubscribing from your emails.                  
+unsubscribe_drops | The number of emails dropped due to a recipient unsubscribing from your emails.
 unsubscribes | The number of recipients who unsubscribed from your emails.
 
 ### Running with Docker
