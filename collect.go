@@ -1,10 +1,11 @@
 package main
 
 import (
+	"time"
+
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
 	"github.com/prometheus/client_golang/prometheus"
-	"time"
 )
 
 type Collector struct {
@@ -133,9 +134,11 @@ func collector(logger log.Logger) *Collector {
 
 func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 	today := time.Now()
+
 	statistics, err := collectByDate(today)
 	if err != nil {
 		level.Error(c.logger).Log(err)
+
 		return
 	}
 
@@ -237,5 +240,4 @@ func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 			*sendGridUserName,
 		)
 	}
-
 }

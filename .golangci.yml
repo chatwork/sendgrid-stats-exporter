@@ -1,0 +1,33 @@
+linters:
+  enable-all: true
+  disable:
+    - errcheck
+    - funlen
+    - dupl
+    - goconst
+    - gocritic
+    - gocyclo
+    - gochecknoglobals
+    - gosec
+    - interfacer
+    - wrapcheck
+    - lll
+    - noctx
+    - exhaustivestruct
+    - goerr113
+    - scopelint
+  fast: false
+
+linters-settings:
+  errcheck:
+    check-type-assertions: false
+    check-blank: false
+    ignore: fmt:.*,io/ioutil:^Read.*,github.com/vendor/go-kit/kit/log.Logger
+
+run:
+  deadline: 1m
+
+issues:
+  exclude:
+    - "`aliases.Schema` composite literal uses unkeyed fields"
+    - "`aliases.BinarySchema` composite literal uses unkeyed fields"

@@ -2,6 +2,12 @@ package main
 
 import (
 	"context"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
 	"github.com/go-kit/kit/log/level"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -9,11 +15,6 @@ import (
 	"github.com/prometheus/common/promlog/flag"
 	"github.com/prometheus/common/version"
 	"gopkg.in/alecthomas/kingpin.v2"
-	"net/http"
-	"os"
-	"os/signal"
-	"syscall"
-	"time"
 )
 
 const (
@@ -39,7 +40,7 @@ var (
 		"sendgrid.username",
 		"Set SendGrid username",
 	).Default("").Envar("SENDGRID_USER_NAME").String()
-	sendGridApiKey = kingpin.Flag(
+	sendGridAPIKey = kingpin.Flag(
 		"sendgrid.api-key",
 		"Set SendGrid API key",
 	).Default("secret").Envar("SENDGRID_API_KEY").String()
@@ -63,12 +64,14 @@ func main() {
 	prometheus.MustRegister(collector)
 	prometheus.Unregister(prometheus.NewGoCollector())
 	registry := prometheus.NewRegistry()
+
 	if !*disableExporterMetrics {
 		registry.MustRegister(
 			prometheus.NewProcessCollector(prometheus.ProcessCollectorOpts{}),
 			prometheus.NewGoCollector(),
 		)
 	}
+
 	registry.MustRegister(collector)
 
 	sig := make(chan os.Signal, 1)
@@ -77,6 +80,7 @@ func main() {
 		syscall.SIGTERM,
 		syscall.SIGINT,
 	)
+
 	defer signal.Stop(sig)
 
 	mux := http.NewServeMux()

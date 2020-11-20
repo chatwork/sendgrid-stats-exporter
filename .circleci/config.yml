@@ -36,6 +36,15 @@ jobs:
     steps:
       - checkout
       - go/mod-download-cached
+      - run:
+          name: Enforce Go Formatted Code
+          command: "! go fmt ./... 2>&1 | read"
+      - run:
+          name: Install GolangCI-Lint
+          command: curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s 'latest'
+      - run:
+          name: Run GolangCI-Lint
+          command: ./bin/golangci-lint run --tests
       - run: make
 
   docker_build_and_bush:

@@ -43,8 +43,7 @@ type Statistics struct {
 }
 
 func collectByDate(time time.Time) ([]*Statistics, error) {
-
-	parsedUrl, err := url.Parse(endpoint)
+	parsedURL, err := url.Parse(endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -56,13 +55,14 @@ func collectByDate(time time.Time) ([]*Statistics, error) {
 	query.Set("start_date", date)
 	query.Set("end_date", date)
 	query.Set("aggregated_by", "day")
-	parsedUrl.RawQuery = query.Encode()
+	parsedURL.RawQuery = query.Encode()
 
-	req, err := http.NewRequest(http.MethodGet, parsedUrl.String(), nil)
+	req, err := http.NewRequest(http.MethodGet, parsedURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", *sendGridApiKey))
+
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", *sendGridAPIKey))
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
@@ -86,5 +86,4 @@ func collectByDate(time time.Time) ([]*Statistics, error) {
 	default:
 		return nil, fmt.Errorf("status code = %d, response = %s", res.StatusCode, res.Body)
 	}
-
 }
