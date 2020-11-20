@@ -1,9 +1,6 @@
 # sendgrid-stats-exporter
 
-## Overview
-
-(TBW)
-
+Prometheus exporter for SendGrid daily metrics exposed by SendGrid Stats API(v3).
 
     +---------------------------+                          +------------+                        +--------------+
     |  SendGrid Stats API (v3)  |---(collect /v3/stats)--->|  exporter  |<---(scrape /metrics)---|  Prometheus  |
@@ -50,26 +47,26 @@ Name     | Description
 
 Name     | Description
 ---------|------------
-blocks | dummy
-bounce_drops | dummy
-bounces | dummy
-deferred | dummy
-delivered | dummy
-invalid_emails | dummy
-processed | dummy
-requests | dummy
-spam_report_drops | dummy
-spam_reports | dummy
-unique_clicks | dummy
-unique_opens | dummy
-unsubscribe_drops | dummy
-unsubscribes | dummy
+blocks | The number of emails that were not allowed to be delivered by ISPs.
+bounce_drops | The number of emails that were dropped because of a bounce.
+bounces | The number of emails that bounced instead of being delivered.
+deferred | The number of emails that temporarily could not be delivered.
+delivered | The number of emails SendGrid was able to confirm were actually delivered to a recipient.
+invalid_emails | The number of recipients who had malformed email addresses or whose mail provider reported the address as invalid.
+processed | Requests from your website, application, or mail client via SMTP Relay or the API that SendGrid processed.
+requests | The number of emails that were requested to be delivered.
+spam_report_drops | The number of emails that were dropped due to a recipient previously marking your emails as spam.
+spam_reports | The number of recipients who marked your email as spam.
+unique_clicks | The number of unique recipients who clicked links in your emails.
+unique_opens | The number of unique recipients who opened your emails.
+unsubscribe_drops | The number of emails dropped due to a recipient unsubscribing from your emails.
+unsubscribes | The number of recipients who unsubscribed from your emails.
 
 ### Running with Docker
 
-(TBW)
-
- - docker run
+```
+$ docker run -d -p 9154:9154 chatwork/sendgrid-stats-exporter
+```
  
 #### Running with `docker-compose`
 
