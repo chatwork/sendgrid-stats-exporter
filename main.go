@@ -59,7 +59,7 @@ func main() {
 
 	level.Info(logger).Log("msg", "Listening on", *listenAddress)
 
-	collector := collector()
+	collector := collector(logger)
 	prometheus.MustRegister(collector)
 	prometheus.Unregister(prometheus.NewGoCollector())
 	registry := prometheus.NewRegistry()

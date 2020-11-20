@@ -1,12 +1,15 @@
 package main
 
 import (
+	"github.com/go-kit/kit/log"
+	"github.com/go-kit/kit/log/level"
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/common/log"
 	"time"
 )
 
 type Collector struct {
+	logger log.Logger
+
 	blocks           *prometheus.Desc
 	bounceDrops      *prometheus.Desc
 	bounces          *prometheus.Desc
@@ -25,8 +28,10 @@ type Collector struct {
 	unsubscribes     *prometheus.Desc
 }
 
-func collector() *Collector {
+func collector(logger log.Logger) *Collector {
 	return &Collector{
+		logger: logger,
+
 		blocks: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", "blocks"),
 			"blocks",
@@ -130,7 +135,7 @@ func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 	today := time.Now()
 	statistics, err := collectByDate(today)
 	if err != nil {
-		log.Error(err)
+		level.Error(c.logger).Log(err)
 		return
 	}
 

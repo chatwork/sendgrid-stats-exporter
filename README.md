@@ -1,5 +1,7 @@
 # sendgrid-stats-exporter
 
+Prometheus exporter for SendGrid daily metrics exposed by SendGrid Stats API(v3).
+
     +---------------------------+                          +------------+                        +--------------+
     |  SendGrid Stats API (v3)  |---(collect /v3/stats)--->|  exporter  |<---(scrape /metrics)---|  Prometheus  |
     +---------------------------+                          +------------+                        +--------------+
@@ -62,7 +64,9 @@ unsubscribes | The number of recipients who unsubscribed from your emails.
 
 ### Running with Docker
 
- - docker run
+```
+$ docker run -d -p 9154:9154 chatwork/sendgrid-stats-exporter
+```
  
 #### Running with `docker-compose`
 
