@@ -44,7 +44,7 @@ jobs:
           command: curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s 'latest'
       - run:
           name: Run GolangCI-Lint
-          command: ./bin/golangci-lint run --tests --disable-all --enable=goimports --enable=golint --enable=govet --enable=errcheck --enable=staticcheck
+          command: ./bin/golangci-lint run --tests --disable-all --enable=goimports --enable=golint --enable=govet --enable=staticcheck
       - run: make
 
   docker_build_and_bush:
