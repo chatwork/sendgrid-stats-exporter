@@ -43,7 +43,6 @@ type Statistics struct {
 }
 
 func collectByDate(time time.Time) ([]*Statistics, error) {
-
 	parsedURL, err := url.Parse(endpoint)
 	if err != nil {
 		return nil, err
@@ -62,6 +61,7 @@ func collectByDate(time time.Time) ([]*Statistics, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", *sendGridAPIKey))
 
 	res, err := http.DefaultClient.Do(req)
@@ -86,5 +86,4 @@ func collectByDate(time time.Time) ([]*Statistics, error) {
 	default:
 		return nil, fmt.Errorf("status code = %d, response = %s", res.StatusCode, res.Body)
 	}
-
 }
