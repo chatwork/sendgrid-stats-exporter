@@ -39,7 +39,7 @@ var (
 		"sendgrid.username",
 		"Set SendGrid username",
 	).Default("").Envar("SENDGRID_USER_NAME").String()
-	sendGridApiKey = kingpin.Flag(
+	sendGridAPIKey = kingpin.Flag(
 		"sendgrid.api-key",
 		"Set SendGrid API key",
 	).Default("secret").Envar("SENDGRID_API_KEY").String()
