@@ -28,9 +28,9 @@ Flags:
                               Address to listen on for web interface and telemetry.
       --web.disable-exporter-metrics
                               Exclude metrics about the exporter itself (promhttp_*, process_*, go_*).
-      --sendgrid.username=""  Set SendGrid username
       --sendgrid.api-key="secret"
-                              Set SendGrid API key
+                              [Required] Set SendGrid API key
+      --sendgrid.username=""  [Optional] Set SendGrid username as a label for each metrics. This is for identifying multiple SendGrid users metrics.
       --log.level=info        Only log messages with the given severity or above. One of: [debug, info, warn, error]
       --log.format=logfmt     Output format of log messages. One of: [logfmt, json]
       --version               Show application version.
