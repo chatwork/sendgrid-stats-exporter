@@ -78,6 +78,16 @@ $ docker-compose up -d
 
 You can check the metrics by accessing Prometheus ([http://127.0.0.1:9200]()).
 
+#### Running with `helm`
+
+##### Prerequisites
+
+https://github.com/aslafy-z/helm-git
+
+```
+$ helm repo add sendgrid-stats-exporter git+https://github.com/chatwork/sendgrid-stats-exporter@charts?ref=v0.0.1
+```
+
 ## Building
 
 ### Building locally

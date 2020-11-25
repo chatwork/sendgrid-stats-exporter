@@ -1,0 +1,6 @@
+apiVersion: v2
+name: sendgrid-stats-exporter
+description: A Helm chart for chatwork/sendgrid-stats-exporter (It's till private for now, but will make it public soon)
+type: application
+version: 0.0.1
+appVersion: 0.0.3
