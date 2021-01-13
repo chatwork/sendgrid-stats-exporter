@@ -65,9 +65,9 @@ Create the name of the service account to use
 Return secret name to be used based on provided values.
 */}}
 {{- define "sendgrid-stats-exporter.secretName" -}}
-{{- if not .Values.deployment.secret.existingSecretName -}}
+{{- if not .Values.secret.existingSecretName -}}
 {{ default (printf "%s-secret" (include "sendgrid-stats-exporter.fullname" . )) }}
 {{- else -}}
-    {{ .Values.deployment.secret.existingSecretName }}
+    {{ .Values.secret.existingSecretName }}
 {{- end -}}
 {{- end -}}

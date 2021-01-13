@@ -6,7 +6,7 @@ A Helm chart for [chatwork/sendgrid-stats-exporter](https://github.com/chatwork/
 ## Installing  the Chart
 
 ```
-$ helm install --set 'deployment.secret.apiKey=secret' --set 'deployment.secret.username=username' sendgrid-stats-exporter ./
+$ helm install --set 'secret.apiKey=secret' --set 'secret.username=username' sendgrid-stats-exporter ./
 ```
 
 ```
@@ -39,8 +39,8 @@ The following table lists the configurable parameters of the Sendgrid-stats-expo
 | `podSecurityContext` | Security context for the pod | `{}` |
 | `securityContext` | Security context for container | `{}` |
 | `envFrom` | Extra custom environment variables from ConfigMaps | `[]` |
-| `deployment.secret.apiKey` | SendGrid api token | `{}` |
-| `deployment.secret.username` | SendGrid username | `[]` |
+| `secret.apiKey` | SendGrid api token | `{}` |
+| `secret.username` | SendGrid username | `[]` |
 | `service.type` | Service Type | `"ClusterIP"` |
 | `service.port` | Service port | `9154` |
 | `ingress.enabled` | If true, enable Ingress | `false` |
