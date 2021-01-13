@@ -35,6 +35,17 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             {{- toYaml .Values.envFrom | nindent 12 }}
+          env:
+            - name: SENDGRID_USER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "sendgrid-stats-exporter.secretName" . }}
+                  key: username
+            - name: SENDGRID_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "sendgrid-stats-exporter.secretName" . }}
+                  key: apiKey
           ports:
             - name: http
               containerPort: 9154

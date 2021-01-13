@@ -29,6 +29,12 @@ securityContext: {}
 
 envFrom: []
 
+deployment:
+  secret:
+    existingSecretName:
+    username: ""
+    apiKey: ""
+
 service:
   type: ClusterIP
   port: 9154
