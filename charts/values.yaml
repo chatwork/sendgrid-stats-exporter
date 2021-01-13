@@ -29,11 +29,10 @@ securityContext: {}
 
 envFrom: []
 
-deployment:
-  secret:
-    existingSecretName:
-    username: ""
-    apiKey: ""
+secret:
+  existingSecretName:
+  username: ""
+  apiKey: ""
 
 service:
   type: ClusterIP
