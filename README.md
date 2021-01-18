@@ -82,29 +82,7 @@ You can check the metrics by accessing Prometheus ([http://127.0.0.1:9200]()).
 
 #### Running with `helm`
 
-##### Prerequisites
-
- - Create a `configmap` to store api key
- - Install [helm-git](https://github.com/aslafy-z/helm-git) plugin
- 
-```
-$ cat configmap.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: sendgrid-config
-  data:
-    SENDGRID_API_KEY: 'secret'
-$ kubectl apply -f configmap.yaml
-configmap/sendgrid-config created
-```
-
-##### Installing
- 
-```
-$ helm repo add sendgrid-stats-exporter 'git+https://github.com/chatwork/sendgrid-stats-exporter@charts?ref=0.0.4'
-$ helm install sendgrid-stats-exporter/sendgrid-stats-exporter --set 'envFrom[0].configMapRef.name=sendgrid-config' --name-template sendgrid-stats-exporter
-```
+https://github.com/chatwork/sendgrid-stats-exporter/tree/main/charts
 
 ## Building
 
