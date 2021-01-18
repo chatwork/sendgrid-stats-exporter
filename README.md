@@ -10,7 +10,7 @@ Prometheus exporter for SendGrid daily metrics exposed by SendGrid Stats API(v3)
 
 ```
 $ make
-$ ./exporter --sendgrid.api-key='secret' --web.listen-address=':9154' --web.disable-exporter-metrics
+$ ./dist/exporter --sendgrid.api-key='secret' --web.listen-address=':9154' --web.disable-exporter-metrics
 ```
 
 ```
@@ -31,6 +31,8 @@ Flags:
       --sendgrid.api-key="secret"
                               [Required] Set SendGrid API key
       --sendgrid.username=""  [Optional] Set SendGrid username as a label for each metrics. This is for identifying multiple SendGrid users metrics.
+      --sendgrid.location=""    [Optional] Set a zone name.(e.g. 'Asia/Tokyo') The default is UTC.
+      --sendgrid.time-offset=0  [Optional] Specify the offset in second from UTC as an integer.(e.g. '32400') This needs to be set along with location.
       --log.level=info        Only log messages with the given severity or above. One of: [debug, info, warn, error]
       --log.format=logfmt     Output format of log messages. One of: [logfmt, json]
       --version               Show application version.

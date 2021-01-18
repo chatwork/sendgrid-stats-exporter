@@ -133,7 +133,14 @@ func collector(logger log.Logger) *Collector {
 }
 
 func (c *Collector) Collect(ch chan<- prometheus.Metric) {
-	today := time.Now()
+	var today time.Time
+
+	if *location != "" && *timeOffset != 0 {
+		loc := time.FixedZone(*location, *timeOffset)
+		today = time.Now().In(loc)
+	} else {
+		today = time.Now()
+	}
 
 	statistics, err := collectByDate(today)
 	if err != nil {

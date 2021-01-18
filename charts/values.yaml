@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: chatwork/sendgrid-stats-exporter
   pullPolicy: IfNotPresent
-  tag: "0.0.3"
+  tag: "0.0.7"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -28,9 +28,9 @@ securityContext: {}
   # runAsUser: 1000
 
 envFrom: []
+extraEnv: []
 
 secret:
-  existingSecretName:
   username: ""
   apiKey: ""
 

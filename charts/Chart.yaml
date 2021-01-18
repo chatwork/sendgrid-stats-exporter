@@ -3,4 +3,4 @@ name: sendgrid-stats-exporter
 description: A Helm chart for chatwork/sendgrid-stats-exporter
 type: application
 version: 0.0.1
-appVersion: 0.0.3
+appVersion: 0.0.7

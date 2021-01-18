@@ -39,6 +39,7 @@ The following table lists the configurable parameters of the Sendgrid-stats-expo
 | `podSecurityContext` | Security context for the pod | `{}` |
 | `securityContext` | Security context for container | `{}` |
 | `envFrom` | Extra custom environment variables from ConfigMaps | `[]` |
+| `extraEnv` | Pod extra environment value | `[]`|
 | `secret.apiKey` | SendGrid api token | `{}` |
 | `secret.username` | SendGrid username | `[]` |
 | `service.type` | Service Type | `"ClusterIP"` |
