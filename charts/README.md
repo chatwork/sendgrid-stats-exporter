@@ -5,9 +5,24 @@ A Helm chart for [chatwork/sendgrid-stats-exporter](https://github.com/chatwork/
 
 ## Installing  the Chart
 
+### Local
+
 ```
 $ helm install --set 'secret.apiKey=secret' --set 'secret.username=username' sendgrid-stats-exporter ./
+or
+$ helm install -f examples/override.yaml sendgrid-stats-exporter ./
 ```
+
+### Remote
+
+[helm-git](https://github.com/aslafy-z/helm-git) plugin is required.
+
+```
+$ helm repo add sendgrid-stats-exporter 'git+https://github.com/chatwork/sendgrid-stats-exporter@charts?ref=0.0.8'
+$ helm install -f examples/override.yaml sendgrid-stats-exporter
+```
+
+### Test 
 
 ```
 $ kubectl get svc
