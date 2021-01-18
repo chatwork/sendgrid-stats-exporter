@@ -44,6 +44,14 @@ var (
 		"sendgrid.username",
 		"[Optional] Set SendGrid username as a label for each metrics. This is for identifying multiple SendGrid users metrics.",
 	).Default("").Envar("SENDGRID_USER_NAME").String()
+	location = kingpin.Flag(
+		"sendgrid.location",
+		"[Optional] Set a zone name.(e.g. 'Asia/Tokyo') The default is UTC.",
+	).Default("").Envar("SENDGRID_LOCATION").String()
+	timeOffset = kingpin.Flag(
+		"sendgrid.time-offset",
+		"[Optional] Specify the offset in second from UTC as an integer.(e.g. '32400') This needs to be set along with location.",
+	).Default("0").Int()
 )
 
 func main() {
