@@ -33,6 +33,7 @@ Flags:
       --sendgrid.username=""  [Optional] Set SendGrid username as a label for each metrics. This is for identifying multiple SendGrid users metrics.
       --sendgrid.location=""    [Optional] Set a zone name.(e.g. 'Asia/Tokyo') The default is UTC.
       --sendgrid.time-offset=0  [Optional] Specify the offset in second from UTC as an integer.(e.g. '32400') This needs to be set along with location.
+      --sendgrid.accumulated-metrics=False [Optional] Accumulated SendGrid Metrics by month, to calculate monthly email limit.
       --log.level=info        Only log messages with the given severity or above. One of: [debug, info, warn, error]
       --log.format=logfmt     Output format of log messages. One of: [logfmt, json]
       --version               Show application version.
@@ -69,7 +70,7 @@ unsubscribes | The number of recipients who unsubscribed from your emails.
 ```
 $ docker run -d -p 9154:9154 chatwork/sendgrid-stats-exporter
 ```
- 
+
 #### Running with `docker-compose`
 
 ```

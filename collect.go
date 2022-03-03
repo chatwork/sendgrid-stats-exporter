@@ -6,6 +6,7 @@ import (
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/jinzhu/now"
 )
 
 type Collector struct {
@@ -142,7 +143,12 @@ func (c *Collector) Collect(ch chan<- prometheus.Metric) {
 		today = time.Now()
 	}
 
-	statistics, err := collectByDate(today)
+	queryDate := today
+	if *accumulatedMetrics {
+		queryDate = now.With(today).BeginningOfMonth()
+	}
+
+	statistics, err := collectByDate(queryDate, today)
 	if err != nil {
 		level.Error(c.logger).Log(err)
 
