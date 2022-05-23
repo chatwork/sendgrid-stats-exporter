@@ -57,5 +57,6 @@ jobs:
           docker_layer_caching: true
           version: 18.09.3
       - run: docker login -u="${DOCKER_REGISTRY_USERNAME}" -p="${DOCKER_REGISTRY_PASSWORD}"
-      - run: make build-image
-      - run: make push-image
+      - run: docker buildx create --use
+      - run: make build-image-multi
+      - run: make push-image-multi
