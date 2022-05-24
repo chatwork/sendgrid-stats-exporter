@@ -41,7 +41,7 @@ jobs:
           command: "! go fmt ./... 2>&1 | read"
       - run:
           name: Install GolangCI-Lint
-          command: curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s 'latest'
+          command: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.46.2
       - run:
           name: Run GolangCI-Lint
           command: ./bin/golangci-lint run --tests
