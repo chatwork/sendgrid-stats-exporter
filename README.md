@@ -65,6 +65,10 @@ unique_opens | The number of unique recipients who opened your emails.
 unsubscribe_drops | The number of emails dropped due to a recipient unsubscribing from your emails.
 unsubscribes | The number of recipients who unsubscribed from your emails.
 
+## Dashboard
+
+A sample dashbord using those metrics has been published [here](https://grafana.com/grafana/dashboards/16319).
+
 ### Running with Docker
 
 ```
