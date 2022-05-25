@@ -13,7 +13,7 @@ executors:
 
 workflows:
   version: 2
-  integration:
+  main:
     jobs:
       - go_build
       - docker_build_and_bush:
