@@ -1,31 +1,12 @@
-linters:
-  enable-all: true
-  disable:
-    - errcheck
-    - funlen
-    - dupl
-    - goconst
-    - gocritic
-    - gocyclo
-    - gochecknoglobals
-    - gosec
-    - interfacer
-    - wrapcheck
-    - lll
-    - noctx
-    - exhaustivestruct
-    - goerr113
-    - scopelint
-  fast: false
-
 linters-settings:
   errcheck:
+    exclude: scripts/errcheck_excludes.txt
     check-type-assertions: false
     check-blank: false
-    ignore: fmt:.*,io/ioutil:^Read.*,github.com/vendor/go-kit/kit/log.Logger
 
 run:
   deadline: 1m
+  go: '1.15'
 
 issues:
   exclude:
