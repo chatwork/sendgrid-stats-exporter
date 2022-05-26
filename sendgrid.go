@@ -42,19 +42,24 @@ type Statistics struct {
 	Stats []*Stat `json:"stats,omitempty"`
 }
 
-func collectByDate(time time.Time) ([]*Statistics, error) {
+func collectByDate(timeStart time.Time, timeEnd time.Time) ([]*Statistics, error) {
 	parsedURL, err := url.Parse(endpoint)
 	if err != nil {
 		return nil, err
 	}
 
 	layout := "2006-01-02"
-	date := time.Format(layout)
+	dateStart := timeStart.Format(layout)
+	dateEnd := timeEnd.Format(layout)
 
 	query := url.Values{}
-	query.Set("start_date", date)
-	query.Set("end_date", date)
-	query.Set("aggregated_by", "day")
+	query.Set("start_date", dateStart)
+	query.Set("end_date", dateEnd)
+	if *accumulatedMetrics {
+		query.Set("aggregated_by", "month")
+	} else {
+		query.Set("aggregated_by", "day")
+	}
 	parsedURL.RawQuery = query.Encode()
 
 	req, err := http.NewRequest(http.MethodGet, parsedURL.String(), nil)

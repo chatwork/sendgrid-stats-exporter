@@ -52,6 +52,11 @@ var (
 		"sendgrid.time-offset",
 		"[Optional] Specify the offset in second from UTC as an integer.(e.g. '32400') This needs to be set along with location.",
 	).Default("0").Envar("SENDGRID_TIME_OFFSET").Int()
+	accumulatedMetrics = kingpin.Flag(
+		"sendgrid.accumulated-metrics",
+		"[Optional] Accumulated SendGrid Metrics by month, to calculate monthly email limit.",
+	).Default("False").Envar("SENDGRID_ACCUMULATED_METRICS").Bool()
+
 )
 
 func main() {
