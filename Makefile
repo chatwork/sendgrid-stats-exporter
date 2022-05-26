@@ -6,6 +6,12 @@ VERSION  := $(shell if [ -n "$(GIT_TAG)" ]; then echo "$(GIT_TAG)"; else echo "$
 
 DIST_DIR := $(shell if [ -n "$(GOOS)$(GOARCH)" ]; then echo "./dist/$(GOOS)-$(GOARCH)"; else echo "./dist"; fi)
 
+# Default build target
+GOOS := $(shell go env GOOS)
+GOARCH := $(shell go env GOARCH)
+DOCKER_BUILD_PLATFORMS ?= linux/amd64,linux/arm64
+DOCKER_BUILDX_ARGS ?= --push
+
 default: build
 
 .PHONY: build
@@ -21,3 +27,9 @@ build-image:
 .PHONY: push-image
 push-image:
 	docker push chatwork/"$(REPO)"
+
+build-image-multi:
+	docker buildx build -t chatwork/"$(REPO)":"$(VERSION)" --platform=$(DOCKER_BUILD_PLATFORMS) .
+
+push-image-multi:
+	docker buildx build $(DOCKER_BUILDX_ARGS) -t chatwork/"$(REPO)":"$(VERSION)" --platform=$(DOCKER_BUILD_PLATFORMS) .
