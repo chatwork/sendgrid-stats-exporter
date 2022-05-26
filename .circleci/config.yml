@@ -13,12 +13,9 @@ executors:
 
 workflows:
   version: 2
-  main:
+  integration:
     jobs:
-      - go_build:
-          filters:
-            tags:
-              only: /.*/
+      - go_build
       - docker_build_and_bush:
           context: "DockerHub"
           filters:
