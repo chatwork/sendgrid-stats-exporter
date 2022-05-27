@@ -54,6 +54,5 @@ jobs:
           docker_layer_caching: true
           version: 20.10.14
       - run: docker login -u="${DOCKER_REGISTRY_USERNAME}" -p="${DOCKER_REGISTRY_PASSWORD}"
-      - run: docker buildx create --name multi-arch --use
       - run: make build-image-multi
       - run: make push-image-multi
