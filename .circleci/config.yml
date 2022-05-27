@@ -16,6 +16,7 @@ workflows:
   integration:
     jobs:
       - go_build
+      - docker_build
       - docker_build_and_bush:
           context: "DockerHub"
           filters:
@@ -44,16 +45,43 @@ jobs:
           command: ./bin/golangci-lint run --tests
       - run: make
 
-  docker_build_and_bush:
-    executor: docker_executor
+  docker_build:
+    machine:
+      image: ubuntu-2004:202104-01
+      docker_layer_caching: true
     environment:
       - CIRCLECI_WORKSPACE: /root/project
+      - BUILDX_PLATFORMS: linux/amd64,linux/arm64
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-          version: 20.10.14
+      - run: docker version
+      - run:
+          name: Install buildx
+          command: |
+            docker buildx install
+            docker run --privileged --rm tonistiigi/binfmt --install "$BUILDX_PLATFORMS"
+            docker buildx create --name multi-arch --use
+            docker buildx ls
       - run: docker login -u="${DOCKER_REGISTRY_USERNAME}" -p="${DOCKER_REGISTRY_PASSWORD}"
-      - run: docker buildx create --name multi-arch --use
+      - run: make build-image-multi
+
+  docker_build_and_bush:
+    machine:
+      image: ubuntu-2004:202104-01
+      docker_layer_caching: true
+    environment:
+      - CIRCLECI_WORKSPACE: /root/project
+      - BUILDX_PLATFORMS: linux/amd64,linux/arm64
+    steps:
+      - checkout
+      - run: docker version
+      - run:
+          name: Install buildx
+          command: |
+            docker buildx install
+            docker run --privileged --rm tonistiigi/binfmt --install "$BUILDX_PLATFORMS"
+            docker buildx create --name multi-arch --use
+            docker buildx ls
+      - run: docker login -u="${DOCKER_REGISTRY_USERNAME}" -p="${DOCKER_REGISTRY_PASSWORD}"
       - run: make build-image-multi
       - run: make push-image-multi
