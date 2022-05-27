@@ -8,7 +8,7 @@ orbs:
 executors:
   docker_executor:
     docker:
-      - image: chatwork/circleci-docker:18.09.3
+      - image: chatwork/circleci-docker:20.10.14
     working_directory: /root/project
 
 workflows:
