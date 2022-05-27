@@ -17,7 +17,7 @@ workflows:
     jobs:
       - go_build
       - docker_build
-      - docker_build_and_bush:
+      - docker_build_and_push:
           context: "DockerHub"
           filters:
             tags:
@@ -65,7 +65,7 @@ jobs:
       - run: docker login -u="${DOCKER_REGISTRY_USERNAME}" -p="${DOCKER_REGISTRY_PASSWORD}"
       - run: make build-image-multi
 
-  docker_build_and_bush:
+  docker_build_and_push:
     machine:
       image: ubuntu-2004:202104-01
       docker_layer_caching: true
