@@ -2,13 +2,14 @@ package main
 
 import (
 	"context"
+	"github.com/prometheus/client_golang/prometheus/collectors"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
 
-	"github.com/go-kit/kit/log/level"
+	"github.com/go-kit/log/level"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/promlog"
@@ -56,7 +57,6 @@ var (
 		"sendgrid.accumulated-metrics",
 		"[Optional] Accumulated SendGrid Metrics by month, to calculate monthly email limit.",
 	).Default("False").Envar("SENDGRID_ACCUMULATED_METRICS").Bool()
-
 )
 
 func main() {
@@ -75,13 +75,13 @@ func main() {
 
 	collector := collector(logger)
 	prometheus.MustRegister(collector)
-	prometheus.Unregister(prometheus.NewGoCollector())
+	prometheus.Unregister(collectors.NewGoCollector())
 	registry := prometheus.NewRegistry()
 
 	if !*disableExporterMetrics {
 		registry.MustRegister(
-			prometheus.NewProcessCollector(prometheus.ProcessCollectorOpts{}),
-			prometheus.NewGoCollector(),
+			collectors.NewProcessCollector(collectors.ProcessCollectorOpts{}),
+			collectors.NewGoCollector(),
 		)
 	}
 
