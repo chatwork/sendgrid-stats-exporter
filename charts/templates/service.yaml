@@ -4,6 +4,10 @@ metadata:
   name: {{ include "sendgrid-stats-exporter.fullname" . }}
   labels:
     {{- include "sendgrid-stats-exporter.labels" . | nindent 4 }}
+  {{- with .Values.serviceAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:

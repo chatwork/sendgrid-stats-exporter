@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: chatwork/sendgrid-stats-exporter
   pullPolicy: IfNotPresent
-  tag: "0.0.7"
+  tag: "v0.0.10"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -13,6 +13,8 @@ serviceAccount:
   create: true
   annotations: {}
   name: ""
+
+serviceAnnotations: {}
 
 podAnnotations: {}
 
