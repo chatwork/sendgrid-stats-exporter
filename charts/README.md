@@ -15,14 +15,12 @@ $ helm install -f examples/override.yaml sendgrid-stats-exporter ./
 
 ### Remote
 
-[helm-git](https://github.com/aslafy-z/helm-git) plugin is required.
-
 ```
-$ helm repo add sendgrid-stats-exporter 'git+https://github.com/chatwork/sendgrid-stats-exporter@charts?ref=0.0.8'
-$ helm install -f examples/override.yaml sendgrid-stats-exporter
+$ helm repo add sendgrid-stats-exporter 'https://chatwork.github.io/sendgrid-stats-exporter'
+$ helm install -f examples/override.yaml sendgrid-stats-exporter/sendgrid-stats-exporter
 ```
 
-### Test 
+### Test
 
 ```
 $ kubectl get svc
